@@ -2,12 +2,12 @@ Este repositorio tiene ejemplos y codigo de prueba de webgl, no esperen encontra
 o aplicacion utilizable, son solo pruebas interesantes para quien quiera aprender de graficos 3d
 y sobretodo de WebGL con la libreria three.js
 
-== Normas de uso
+## Normas de uso ##
 
 Todas las demos en este repo se consideran de "dominio publico", o sea se pueden usar para lo que sea
 No es necesario que me den credito, aunque si lo hacen lo agradeceria
 
-== Detalles tecnicos
+## Detalles tecnicos ##
 
 Todas, o al menos la mayoria estan basadas en la libreria three.js", recomiendo visitar esa pagina 
 y ver los ejemplos de lo que es capaz de hacer
