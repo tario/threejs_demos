@@ -24,6 +24,16 @@ Con esto le indicamos a donde tiene que insertar el canvas donde va a renderizar
 
 
 <script id="fragmentShader" type="x-shader/x-fragment">
+  /*
+  // Este codig comentado NO debe incluirse en el shader
+  // se incluye aqui comentado para ilustrar el codigo GLSL
+  // que agrega la libreria three.js
+  precision highp float;
+  precision highp int;
+
+  uniform mat4 viewMatrix;
+  uniform vec3 cameraPosition;
+  */
   varying vec2 vUv;
   uniform sampler2D texture1;
   void main( void ) {
@@ -33,7 +43,21 @@ Con esto le indicamos a donde tiene que insertar el canvas donde va a renderizar
 </script>
 
 <script id="vertexShader" type="x-shader/x-vertex">
-
+  /*
+  // Este codig comentado NO debe incluirse en el shader
+  // se incluye aqui comentado para ilustrar el codigo GLSL
+  // que agrega la libreria three.js
+  uniform mat4 modelMatrix;
+  uniform mat4 modelViewMatrix;
+  uniform mat4 projectionMatrix;
+  uniform mat4 viewMatrix;
+  uniform mat3 normalMatrix;
+  uniform vec3 cameraPosition;
+  attribute vec3 position;
+  attribute vec3 normal;
+  attribute vec2 uv;
+  attribute vec2 uv2;
+  */
   varying vec2 vUv;
 
   void main()
