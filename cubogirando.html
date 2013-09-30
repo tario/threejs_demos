@@ -29,7 +29,15 @@ Con esto le indicamos a donde tiene que insertar el canvas donde va a renderizar
 // de que ejecuto mi codigo cuando el documento se termino por completo de cargar
 $(document).ready(
 function() {
-
+  // esta funcion instancia el renderer, si el browser no tiene soporte para webgl
+  // Se puede renderizar dibujando los triangulos a un canvas
+  var newRenderer = function() {
+    try {
+      return new THREE.WebGLRenderer();
+    } catch(err) {
+      return new THREE.CanvasRenderer();
+    }
+  }
   // un par de constantes que utilizare mas adelante para las dimensiones del
   // area de la pantalla donde se renderizara
   // Las mayusculas no tienen significado especial para javascript, son solo
@@ -91,7 +99,7 @@ function() {
   camera.position.z = 500;
 
   // se instancia un renderer
-  var renderer = new THREE.WebGLRenderer();
+  var renderer = newRenderer();
 
   // se le configura las dimensiones del area a donde renderizar
   renderer.setSize(WIDTH, HEIGHT);
