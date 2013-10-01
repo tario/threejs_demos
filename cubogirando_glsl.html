@@ -167,12 +167,20 @@ function() {
   // matriz de rotacion que se aplicara al cubo en cada frame
   // se inicializa como una matriz identidad
   var rotation_matrix = new THREE.Matrix4().identity();
+  
+  var mouseDown = false;
+  $(document).mousedown(function(event) {
+    mouseDown = true;
+  });
+  $(document).mouseup(function(event) {
+    mouseDown = false;
+  });
 
   $(document).mousemove(function(event) {
     var deltax = event.pageX - last_pagex;
     var deltay = event.pageY - last_pagey;
 
-    if (last_delta) {
+    if (last_delta && mouseDown) {
       // si se movio el mouse, entonces se crea una matriz
       // de rotacion en el eje Y, y se premultiplica
       // por la matriz de rotacion que estamos guardando
