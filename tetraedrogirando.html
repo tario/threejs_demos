@@ -1,5 +1,5 @@
 <!-- 
-Ejemplo basico de three.js: Cubo girando controlado por el mouse e iluminado con phong
+Ejemplo basic de geometria customizada en three.js: Tetraedro girando controlado por el mouse e iluminado con phong
 
 En teoria deberia funcionar en Google Chrome, Mozilla Firefox e Internet Explorer, pero solo
 lo probe en Google Chrome
@@ -81,34 +81,26 @@ function() {
     var geo =  new THREE.Geometry();
 
     // primero defino los cuatro puntos que componen al tetraedro
-    geo.vertices.push(new THREE.Vector3(0, 100, -50));
-    geo.vertices.push(new THREE.Vector3(86.6,-50, -50));
-    geo.vertices.push(new THREE.Vector3(-86.6,-50, -50));
-    geo.vertices.push(new THREE.Vector3( 0, 0, 100));
+    // agrego los vertices
+    geo.vertices[0] = new THREE.Vector3(0, 100, -50);
+    geo.vertices[1] = new THREE.Vector3(86.6,-50, -50); 
+    geo.vertices[2] = new THREE.Vector3(-86.6,-50, -50);
+    geo.vertices[3] = new THREE.Vector3( 0, 0, 100);
+
     // esta funcion construye una cara de 3 vertices 
-    // con una normal
     var push_face = function(x_index,y_index,z_index) {
-      // agrego los vertices y construyo una cara con sus indices
-      var face = new THREE.Face3(x_index, y_index, z_index);
-
-      // la normal se calcula como (z-x) X (z-y)
-      var dist1 = geo.vertices[z_index].clone();
-      var dist2 = geo.vertices[z_index].clone();
-      dist1.sub(geo.vertices[x_index]);
-      dist2.sub(geo.vertices[y_index]);
-
-      var normal = dist1;
-      dist1.cross(dist2).normalize();
-
-      face.normal.copy(dist1);
-      // agrego la cara
-      geo.faces.push(face);
+      // no es necesario calcular o definir la normal aqui
+      // porque se hace mas adelante al llamar a computeFaceNormals
+      geo.faces.push(new THREE.Face3(x_index, y_index, z_index));
     };
 
+    // agrego las caras, los indices son los mismos indices
+    // de los vertices definidos con geo.vertices[...
     push_face(0,1,2);
     push_face(3,1,0);
     push_face(3,2,1);
     push_face(0,2,3);
+    geo.computeFaceNormals();
 
     return geo;
   };
@@ -167,7 +159,7 @@ function() {
   $(document).mouseup(function(event) {
     mouseDown = false;
   });
-  
+
   $(document).mousemove(function(event) {
     var deltax = event.pageX - last_pagex;
     var deltay = event.pageY - last_pagey;
