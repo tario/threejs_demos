@@ -64,16 +64,17 @@ function() {
   // Se crea un objeto Escena, este agrupa todo lo que hay en la escena
   var scene = new THREE.Scene();
 
-  var texturePainting1 = THREE.ImageUtils.loadTexture( "textures/toolboxside.jpg", THREE.UVMapping);
+  var texturePainting1 = THREE.ImageUtils.loadTexture( "textures/toolboxside.png", THREE.UVMapping);
   // Se crea un material de iluminacion phong, con sus parametros
   var material =
     new THREE.MeshPhongMaterial(
       {
         specular: 0x808080,
         ambient: 0xffffff,
-        emissive: 0x606060,
+        emissive: 0xc0c0c0,
         shininess: 10,
-        map: texturePainting1
+        map: texturePainting1,
+        transparent: true
       });
 
   // Se crea un "mesh", un "mesh" es la combinacion de una geometria
@@ -82,7 +83,13 @@ function() {
     new THREE.CubeGeometry(100,100,100),
     material);
 
+  var cube2 = new THREE.Mesh(
+    new THREE.CubeGeometry(110,110,110),
+    new THREE.MeshBasicMaterial({color : 0xdc2128, side: THREE.BackSide}));
+
+
   // se agregan a la escena el cubo y la camara
+  scene.add(cube2);
   scene.add(cube);
   scene.add(camera);
 
@@ -102,7 +109,7 @@ function() {
   // se instancia un renderer
   var renderer = newRenderer();
 
-  renderer.setClearColor(new THREE.Color(0xdc2128));
+  renderer.setClearColor(new THREE.Color(0xffffff));
 
   // se le configura las dimensiones del area a donde renderizar
   renderer.setSize(WIDTH, HEIGHT);
@@ -131,6 +138,7 @@ function() {
   aux.makeRotationX(Math.PI/4);
   rotation_matrix = aux.multiply(rotation_matrix);
   cube.setRotationFromMatrix(rotation_matrix);
+  cube2.setRotationFromMatrix(rotation_matrix);
 
   var mouseDown = false;
   $(document).mousedown(function(event) {
@@ -160,6 +168,7 @@ function() {
       // se llama al metodo setRotationFromMatrix para
       // asignarle la matriz de rotacion al cubo
       cube.setRotationFromMatrix(rotation_matrix);
+      cube2.setRotationFromMatrix(rotation_matrix);
     }
 
     // almaceno las coordenadas del mouse, para compararlas
