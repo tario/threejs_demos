@@ -64,15 +64,15 @@ function() {
   // Se crea un objeto Escena, este agrupa todo lo que hay en la escena
   var scene = new THREE.Scene();
 
-  var texturePainting1 = THREE.ImageUtils.loadTexture( "textures/toolboxside.png", THREE.UVMapping);
+  var texturePainting1 = THREE.ImageUtils.loadTexture( "textures/toolboxside.jpg", THREE.UVMapping);
   // Se crea un material de iluminacion phong, con sus parametros
   var material =
     new THREE.MeshPhongMaterial(
       {
-        specular: 0x808080,
-        ambient: 0xffffff,
-        emissive: 0xc0c0c0,
-        shininess: 10,
+        specular: 0x000000,
+        ambient: 0x000000,
+        emissive: 0xFFFFFF,
+        shininess: 0,
         map: texturePainting1,
         transparent: true
       });
@@ -84,8 +84,8 @@ function() {
     material);
 
   var cube2 = new THREE.Mesh(
-    new THREE.CubeGeometry(110,110,110),
-    new THREE.MeshBasicMaterial({color : 0xdc2128, side: THREE.BackSide}));
+    new THREE.CubeGeometry(120,120,120),
+    new THREE.MeshBasicMaterial({color : 0xFFFFFF, side: THREE.BackSide}));
 
 
   // se agregan a la escena el cubo y la camara
@@ -109,7 +109,7 @@ function() {
   // se instancia un renderer
   var renderer = newRenderer();
 
-  renderer.setClearColor(new THREE.Color(0xffffff));
+  renderer.setClearColor(new THREE.Color(0xdc2128));
 
   // se le configura las dimensiones del area a donde renderizar
   renderer.setSize(WIDTH, HEIGHT);
