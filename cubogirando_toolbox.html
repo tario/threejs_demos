@@ -142,40 +142,25 @@ function() {
 
   var mouseDown = false;
   $(document).mousedown(function(event) {
+    deltax = 0;
+    deltay = 0;
+
     mouseDown = true;
   });
   $(document).mouseup(function(event) {
     mouseDown = false;
   });
 
+  var deltax = Math.random()*0.4+6;
+  var deltay = Math.random()*0.4+6;
+
   $(document).mousemove(function(event) {
-    var deltax = event.pageX - last_pagex;
-    var deltay = event.pageY - last_pagey;
-
-    if (last_delta && mouseDown) {
-      // si se movio el mouse, entonces se crea una matriz
-      // de rotacion en el eje Y, y se premultiplica
-      // por la matriz de rotacion que estamos guardando
-      var aux = new THREE.Matrix4();
-      aux.makeRotationY(deltax*0.01);
-      rotation_matrix = aux.multiply(rotation_matrix);
-
-      // lo mismo para el otro eje
-      aux = new THREE.Matrix4();
-      aux.makeRotationX(deltay*0.01);
-      rotation_matrix = aux.multiply(rotation_matrix);
-
-      // se llama al metodo setRotationFromMatrix para
-      // asignarle la matriz de rotacion al cubo
-      cube.setRotationFromMatrix(rotation_matrix);
-      cube2.setRotationFromMatrix(rotation_matrix);
+    if (mouseDown){
+      deltax = event.pageX - last_pagex;
+      deltay = event.pageY - last_pagey;
     }
-
-    // almaceno las coordenadas del mouse, para compararlas
-    // con las nuevas la proxima vez
     last_pagex = event.pageX;
     last_pagey = event.pageY;
-    last_delta = true;
   });
 
   // defino una funcion que invoca la renderizacion de la escena
@@ -183,6 +168,27 @@ function() {
   // requestAnimationFrame es la manera ideal en javascript para
   // correr un loop de renderizacion grafica
   var anim = function() { 
+
+    deltax=deltax*0.99;
+    deltay=deltay*0.99;
+
+    // si se movio el mouse, entonces se crea una matriz
+    // de rotacion en el eje Y, y se premultiplica
+    // por la matriz de rotacion que estamos guardando
+    var aux = new THREE.Matrix4();
+    aux.makeRotationY(deltax*0.01);
+    rotation_matrix = aux.multiply(rotation_matrix);
+
+    // lo mismo para el otro eje
+    aux = new THREE.Matrix4();
+    aux.makeRotationX(deltay*0.01);
+    rotation_matrix = aux.multiply(rotation_matrix);
+
+    // se llama al metodo setRotationFromMatrix para
+    // asignarle la matriz de rotacion al cubo
+    cube.setRotationFromMatrix(rotation_matrix);
+    cube2.setRotationFromMatrix(rotation_matrix);
+
     renderer.render(scene,camera);
     requestAnimationFrame(anim);
   };
